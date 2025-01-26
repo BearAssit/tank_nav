@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank导航网 - 升级详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #2c3e50;
+            position: relative;
+            background: #1e394e;
+        }
+
+        body::before {
+            content: '';
+            background: url(https://en.tankiwiki.com/images/ru/f/fe/Banner_img_alpha.png) no-repeat center -110px,
+                        linear-gradient(180deg,#1e394ee6,#1e394ee6);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .12;
+            z-index: -1;
+        }
+
+        .nav-bar {
+            background: rgba(30, 57, 78, 0.95);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: #46df11;
+            font-size: 1.3em;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-logo:hover {
+            color: #46df11;
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #46df11;
+        }
+
+        .nav-link.active {
+            color: #46df11;
+            background: rgba(70, 223, 17, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            margin: 60px 0 30px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            display: inline-block;
+            background: rgba(70, 223, 17, 0.1);
+            color: #46df11;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 1.6em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upgrade-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .mk-title {
+            color: #46df11;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(70, 223, 17, 0.3);
+        }
+
+        .upgrade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .upgrade-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(70, 223, 17, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .upgrade-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(70, 223, 17, 0.3);
+        }
+
+        .upgrade-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .upgrade-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        .total-cost {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(70, 223, 17, 0.2);
+            font-weight: bold;
+            color: #46df11;
+        }
+
+        .btn-problem {
+            background: url(https://en.tankiwiki.com/resources/assets/button_problem.png) no-repeat, 
+                        linear-gradient(264.26deg, rgba(70, 223, 17, .75) 0, rgba(0, 140, 132, .75) 25%);
+            border-radius: 6px;
+            border: 1px solid;
+            border-image: linear-gradient(to right, rgb(0 140 132), rgb(70 223 17));
+            border-image-slice: 1;
+            height: 40px;
+            font-size: 14px;
+            color: white;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            margin: 20px 0;
+        }
+
+        .btn-problem:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(30, 57, 78, 0.95);
+                flex-direction: column;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .upgrade-section {
+                padding: 15px;
+            }
+
+            .upgrade-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Tank导航网</a>
+            <div class="nav-mobile-toggle">☰</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="upgrade.html" class="nav-link">强化计算</a>
+                <a href="convert.html" class="nav-link">转化功能</a>
+                <a href="thanks.html" class="nav-link">鸣谢玩家</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>装备升级详情</h2>
+        </div>
+
+       
+        
+            <!-- MK1 升级详情 -->
+            <div class="upgrade-section">
+                <h2 class="mk-title">MK1 炮塔升级详情</h2>
+                <div class="upgrade-grid">
+                    <div class="upgrade-card">
+                        <h3>0级 → 1级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>100 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>1级 → 2级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>1,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>2级 → 3级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>1,900 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card total">
+                        <h3>完整升级路径（0级 → 3级）</h3>
+                        <div class="total-cost">
+                            <span>总成本：3,000 水晶</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- MK2 升级详情 -->
+            <div class="upgrade-section">
+                <h2 class="mk-title">MK2 炮塔升级详情</h2>
+                <div class="upgrade-grid">
+                    <div class="upgrade-card">
+                        <h3>0级 → 1级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>1,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>1级 → 2级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>2,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>2级 → 3级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>3,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>3级 → 4级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>4,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>4级 → 5级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>5,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card total">
+                        <h3>完整升级路径（0级 → 5级）</h3>
+                        <div class="total-cost">
+                            <span>总成本：15,000 水晶</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- MK3 升级详情 -->
+            <div class="upgrade-section">
+                <h2 class="mk-title">MK3 炮塔升级详情</h2>
+                <div class="upgrade-grid">
+                    <div class="upgrade-card">
+                        <h3>0级 → 1级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>1,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>1级 → 2级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>2,140 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>2级 → 3级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>3,290 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>3级 → 4级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>4,430 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>4级 → 5级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>5,570 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>5级 → 6级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>6,710 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>6级 → 7级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>7,860 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card">
+                        <h3>7级 → 8级</h3>
+                        <div class="upgrade-info">
+                            <span>升级成本：</span>
+                            <span>9,000 水晶</span>
+                        </div>
+                    </div>
+                    <div class="upgrade-card total">
+                        <h3>完整升级路径（0级 → 8级）</h3>
+                        <div class="total-cost">
+                            <span>总成本：40,000 水晶</span>
+                        </div>
+                    </div>
+                </div>
+        
+            <!-- MK4 升级详情 -->
+               <!-- MK4 升级详情 -->
+    <div class="upgrade-section">
+        <h2 class="mk-title">MK4 炮塔升级详情</h2>
+        <div class="upgrade-grid">
+            <div class="upgrade-card">
+                <h3>0级 → 1级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>1,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>1级 → 2级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>2,330 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>2级 → 3级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>3,670 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>3级 → 4级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>5,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>4级 → 5级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>6,330 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>5级 → 6级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>7,670 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>6级 → 7级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>9,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>7级 → 8级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>10,330 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>8级 → 9级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>11,670 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>9级 → 10级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>13,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card total">
+                <h3>完整升级路径（0级 → 10级）</h3>
+                <div class="total-cost">
+                    <span>总成本：70,000 水晶</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MK5 升级详情 -->
+    <div class="upgrade-section">
+        <h2 class="mk-title">MK5 炮塔升级详情</h2>
+        <div class="upgrade-grid">
+            <div class="upgrade-card">
+                <h3>0级 → 1级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>1,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>1级 → 2级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>2,800 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>2级 → 3级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>4,600 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>3级 → 4级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>6,400 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>4级 → 5级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>8,200 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>5级 → 6级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>10,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>6级 → 7级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>11,800 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>7级 → 8级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>13,600 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>8级 → 9级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>15,400 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>9级 → 10级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>17,200 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card">
+                <h3>10级 → 11级</h3>
+                <div class="upgrade-info">
+                    <span>升级成本：</span>
+                    <span>19,000 水晶</span>
+                </div>
+            </div>
+            <div class="upgrade-card total">
+                <h3>完整升级路径（0级 → 11级）</h3>
+                <div class="total-cost">
+                    <span>总成本：110,000 水晶</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- MK6 升级详情 -->
+        <div class="upgrade-section">
+            <h2 class="mk-title">MK6 炮塔升级详情</h2>
+            <div class="upgrade-grid">
+                <div class="upgrade-card">
+                    <h3>0级 → 1级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>3,000 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>1级 → 2级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>4,730 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>2级 → 3级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>6,450 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>3级 → 4级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>8,180 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>4级 → 5级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>9,910 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>5级 → 6级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>11,640 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>6级 → 7级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>13,360 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>7级 → 8级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>15,090 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>8级 → 9级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>16,820 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>9级 → 10级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>18,550 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>10级 → 11级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>20,270 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>11级 → 12级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>22,000 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card total">
+                    <h3>完整升级路径（0级 → 12级）</h3>
+                    <div class="total-cost">
+                        <span>总成本：150,000 水晶</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- MK7 升级详情 -->
+        <div class="upgrade-section">
+            <h2 class="mk-title">MK7 炮塔升级详情</h2>
+            <div class="upgrade-grid">
+                <div class="upgrade-card">
+                    <h3>0级 → 1级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>5,000 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>1级 → 2级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>6,870 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>2级 → 3级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>8,750 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>3级 → 4级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>10,620 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>4级 → 5级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>12,490 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>5级 → 6级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>14,370 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>6级 → 7级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>16,240 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>7级 → 8级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>18,120 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>8级 → 9级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>19,990 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>9级 → 10级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>21,860 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>10级 → 11级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>23,740 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>11级 → 12级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>25,610 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>12级 → 13级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>27,480 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>13级 → 14级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>29,360 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>14级 → 15级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>31,230 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>15级 → 16级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>33,110 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>16级 → 17级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>34,980 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>17级 → 18级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>36,850 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>18级 → 19级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>38,730 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card">
+                    <h3>19级 → 20级</h3>
+                    <div class="upgrade-info">
+                        <span>升级成本：</span>
+                        <span>40,600 水晶</span>
+                    </div>
+                </div>
+                <div class="upgrade-card total">
+                    <h3>完整升级路径（0级 → 20级）</h3>
+                    <div class="total-cost">
+                        <span>总成本：456,000 水晶</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="text-center">
+            <a href="upgrade.html" class="btn-problem">返回计算器</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.nav-mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html> 

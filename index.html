@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TankiX工具站 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #2c3e50;
+            position: relative;
+            background: #1e394e;
+        }
+
+        body::before {
+            content: '';
+            background: url(https://en.tankiwiki.com/images/ru/f/fe/Banner_img_alpha.png) no-repeat center -110px,
+                        linear-gradient(180deg,#1e394ee6,#1e394ee6);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .12;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            color: white;
+            margin: 50px 0;
+        }
+
+        .welcome-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            color: #46df11;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2em;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.1em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .nav-bar {
+            background: rgba(30, 57, 78, 0.95);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: #46df11;
+            font-size: 1.3em;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-logo:hover {
+            color: #46df11;
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #46df11;
+        }
+
+        .nav-link.active {
+            color: #46df11;
+            background: rgba(70, 223, 17, 0.1);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(30, 57, 78, 0.95);
+                flex-direction: column;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+
+        .server-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .server-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(70, 223, 17, 0.3);
+        }
+
+        .server-card:hover {
+            transform: translateY(-5px);
+            border-color: #46df11;
+        }
+
+        .server-icon {
+            font-size: 2.5em;
+            color: #46df11;
+            margin-bottom: 20px;
+        }
+
+        .server-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .server-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .server-link {
+            display: inline-block;
+            padding: 10px 25px;
+            background: url(https://en.tankiwiki.com/resources/assets/button_problem.png) no-repeat, 
+                        linear-gradient(264.26deg, rgba(70, 223, 17, .75) 0, rgba(0, 140, 132, .75) 25%);
+            border-radius: 6px;
+            border: 1px solid;
+            border-image: linear-gradient(to right, rgb(0 140 132), rgb(70 223 17));
+            border-image-slice: 1;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .server-link:hover {
+            opacity: 0.9;
+            color: white;
+        }
+
+        .section-title {
+            margin: 60px 0 30px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            display: inline-block;
+            background: rgba(70, 223, 17, 0.1);
+            color: #46df11;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 1.6em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(70, 223, 17, 0.3);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .server-links {
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                margin: 40px 0 20px 0;
+            }
+
+            .section-title h2 {
+                font-size: 1.3em;
+                padding: 8px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Tank导航网</a>
+            <div class="nav-mobile-toggle">☰</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">首页</a>
+                <a href="upgrade.html" class="nav-link">强化计算</a>
+                <a href="convert.html" class="nav-link">转化功能</a>
+                <a href="thanks.html" class="nav-link">鸣谢玩家</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="welcome-section">
+            <h1 class="welcome-title">欢迎来到 Tank 导航站</h1>
+            <p class="welcome-subtitle">为Tank玩家提供实用工具和游戏辅助功能</p>
+        </section>
+
+        <!-- 快捷启动区域 -->
+        <div class="section-title">
+            <h2>快捷启动</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="server-links">
+            <div class="server-card">
+                <div class="server-icon">🇨🇳</div>
+                <h2 class="server-title">国服</h2>
+                <p class="server-description">3DTank中国官方服务器</p>
+                <a href="http://3dtank.com/play" target="_blank" class="server-link">进入游戏</a>
+            </div>
+
+            <div class="server-card">
+                <div class="server-icon">🌍</div>
+                <h2 class="server-title">外服</h2>
+                <p class="server-description">Tank国际服务器</p>
+                <a href="https://tankionline.com/play/" target="_blank" class="server-link">进入游戏</a>
+            </div>
+
+            <div class="server-card">
+                <div class="server-icon">🎮</div>
+                <h2 class="server-title">4399</h2>
+                <p class="server-description">4399 Tank服务器</p>
+                <a href="https://my.4399.com/yxtk/" target="_blank" class="server-link">进入游戏</a>
+            </div>
+
+            <div class="server-card">
+                <div class="server-icon">🎯</div>
+                <h2 class="server-title">7k7k</h2>
+                <p class="server-description">7k7k Tank服务器</p>
+                <a href="https://web.7k7k.com/games/3dtk/" target="_blank" class="server-link">进入游戏</a>
+            </div>
+
+            <div class="server-card">
+                <div class="server-icon">🔧</div>
+                <h2 class="server-title">测试服</h2>
+                <p class="server-description">Tank测试服务器</p>
+                <a href="https://test.tankionline.com/" target="_blank" class="server-link">进入游戏</a>
+            </div>
+        </div>
+
+        <!-- 工具功能区域 -->
+        <div class="section-title">
+            <h2>实用工具</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h2 class="feature-title">强化计算</h2>
+                <p class="feature-description">快速计算装备强化所需的水晶数量，帮助您更好地规划资源使用。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h2 class="feature-title">转化功能</h2>
+                <p class="feature-description">便捷的游戏资源转换计算器，轻松了解各类资源之间的兑换比例。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h2 class="feature-title">鸣谢玩家</h2>
+                <p class="feature-description">感谢为工具站发展做出贡献的玩家们。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.nav-mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html> 

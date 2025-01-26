@@ -484,6 +484,94 @@
             background: #46df11;
             color: #1e394e;
         }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .calculate-btn {
+            background: rgba(70, 223, 17, 0.1);
+            color: #46df11;
+            border: 1px solid #46df11;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            background: rgba(70, 223, 17, 0.2);
+        }
+
+        .max-btn {
+            background: rgba(70, 223, 17, 0.15);
+        }
+
+        .result-detail {
+            background: rgba(70, 223, 17, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .result-detail p {
+            margin: 5px 0;
+            color: #46df11;
+        }
+
+        /* 优化选择器组样式 */
+        .select-group {
+            margin-bottom: 20px;
+        }
+
+        .select-item {
+            margin-bottom: 15px;
+        }
+
+        .select-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .select-item select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 14px;
+        }
+
+        /* 优化按钮组样式 */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .calculate-btn {
+            min-width: 150px;
+            padding: 12px 24px;
+            font-size: 15px;
+        }
+
+        /* 优化结果显示样式 */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(70, 223, 17, 0.1);
+        }
+
+        .result p {
+            margin: 5px 0;
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
@@ -531,75 +619,115 @@
             <!-- 炮塔升级卡片 -->
             <div class="equipment-card">
                 <h3>炮塔升级</h3>
-                <div class="input-group">
-                    <label>装备等级</label>
-                    <select id="turret-mk">
-                        <option value="mk1">MK1</option>
-                        <option value="mk2">MK2</option>
-                        <option value="mk3">MK3</option>
-                        <option value="mk4">MK4</option>
-                        <option value="mk5">MK5</option>
-                        <option value="mk6">MK6</option>
-                        <option value="mk7">MK7</option>
-                    </select>
+                <div class="calculator-section">
+                    <!-- 当前状态 -->
+                    <div class="select-group">
+                        <div class="select-item">
+                            <label>当前MK等级：</label>
+                            <select id="turret-mk" onchange="updateLevelOptions('turret')">
+                                <option value="mk1">MK1</option>
+                                <option value="mk2">MK2</option>
+                                <option value="mk3">MK3</option>
+                                <option value="mk4">MK4</option>
+                                <option value="mk5">MK5</option>
+                                <option value="mk6">MK6</option>
+                                <option value="mk7">MK7</option>
+                            </select>
+                        </div>
+                        <div class="select-item">
+                            <label>当前等级：</label>
+                            <select id="turret-current">
+                                <!-- 动态填充 -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 目标状态 -->
+                    <div class="select-group">
+                        <div class="select-item">
+                            <label>目标MK等级：</label>
+                            <select id="turret-target-mk" onchange="updateTargetLevelOptions('turret')">
+                                <option value="mk1">MK1</option>
+                                <option value="mk2">MK2</option>
+                                <option value="mk3">MK3</option>
+                                <option value="mk4">MK4</option>
+                                <option value="mk5">MK5</option>
+                                <option value="mk6">MK6</option>
+                                <option value="mk7">MK7</option>
+                            </select>
+                        </div>
+                        <div class="select-item">
+                            <label>目标等级：</label>
+                            <select id="turret-target-level">
+                                <!-- 动态填充 -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 计算按钮 -->
+                    <div class="button-group">
+                        <button onclick="calculateCustomCost('turret')" class="calculate-btn">计算升级成本</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>当前等级</label>
-                    <select id="turret-current">
-                        <option value="0">0级</option>
-                        <option value="1">1级</option>
-                        <option value="2">2级</option>
-                        <option value="3">3级</option>
-                        <option value="4">4级</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>目标等级</label>
-                    <select id="turret-target">
-                        <option value="1">1级</option>
-                        <option value="2">2级</option>
-                        <option value="3">3级</option>
-                        <option value="4">4级</option>
-                        <option value="5">5级</option>
-                    </select>
-                </div>
-                <button onclick="calculateCost('turret')" class="btn-problem">计算</button>
                 <div id="turret-result" class="result" style="display: none;"></div>
             </div>
 
             <!-- 底盘升级卡片 -->
             <div class="equipment-card">
                 <h3>底盘升级</h3>
-                <div class="input-group">
-                    <label>装备等级</label>
-                    <select id="hull-mk">
-                        <option value="mk1">MK1</option>
-                        <option value="mk2">MK2</option>
-                        <option value="mk3">MK3</option>
-                        <option value="mk4">MK4</option>
-                        <option value="mk5">MK5</option>
-                        <option value="mk6">MK6</option>
-                        <option value="mk7">MK7</option>
-                    </select>
+                <div class="calculator-section">
+                    <!-- 当前状态 -->
+                    <div class="select-group">
+                        <div class="select-item">
+                            <label>当前MK等级：</label>
+                            <select id="chassis-mk" onchange="updateLevelOptions('chassis')">
+                                <option value="mk1">MK1</option>
+                                <option value="mk2">MK2</option>
+                                <option value="mk3">MK3</option>
+                                <option value="mk4">MK4</option>
+                                <option value="mk5">MK5</option>
+                                <option value="mk6">MK6</option>
+                                <option value="mk7">MK7</option>
+                            </select>
+                        </div>
+                        <div class="select-item">
+                            <label>当前等级：</label>
+                            <select id="chassis-current">
+                                <!-- 动态填充 -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 目标状态 -->
+                    <div class="select-group">
+                        <div class="select-item">
+                            <label>目标MK等级：</label>
+                            <select id="chassis-target-mk" onchange="updateTargetLevelOptions('chassis')">
+                                <option value="mk1">MK1</option>
+                                <option value="mk2">MK2</option>
+                                <option value="mk3">MK3</option>
+                                <option value="mk4">MK4</option>
+                                <option value="mk5">MK5</option>
+                                <option value="mk6">MK6</option>
+                                <option value="mk7">MK7</option>
+                            </select>
+                        </div>
+                        <div class="select-item">
+                            <label>目标等级：</label>
+                            <select id="chassis-target-level">
+                                <!-- 动态填充 -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 计算按钮 -->
+                    <div class="button-group">
+                        <button onclick="calculateChassisCost()" class="calculate-btn">计算升级成本</button>
+                    </div>
+
+                    <!-- 底盘结果显示区域 -->
+                    <div id="chassis-result" class="result" style="display: none;"></div>
                 </div>
-                <div class="input-group">
-                    <label>当前等级</label>
-                    <select id="hull-current">
-                        <option value="0">0级</option>
-                        <option value="1">1级</option>
-                        <option value="2">2级</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>目标等级</label>
-                    <select id="hull-target">
-                        <option value="1">1级</option>
-                        <option value="2">2级</option>
-                        <option value="3">3级</option>
-                    </select>
-                </div>
-                <button onclick="calculateCost('hull')" class="btn-problem">计算</button>
-                <div id="hull-result" class="result" style="display: none;"></div>
             </div>
 
             <!-- 无人机升级卡片 -->
@@ -907,116 +1035,211 @@
             });
         });
 
-        // 添加一个函数来根据MK等级更新选项
+        // 更新当前等级选项
         function updateLevelOptions(type) {
-            const mkSelect = document.getElementById(`${type}-mk`);
+            const selectedMk = document.getElementById(`${type}-mk`).value;
             const currentSelect = document.getElementById(`${type}-current`);
-            const targetSelect = document.getElementById(`${type}-target`);
-            const selectedMk = mkSelect.value;
-
+            
+            const maxLevels = {
+                'mk1': 3,
+                'mk2': 5,
+                'mk3': 8,
+                'mk4': 10,
+                'mk5': 11,
+                'mk6': 12,
+                'mk7': 20
+            };
+            
             // 清空现有选项
             currentSelect.innerHTML = '';
-            targetSelect.innerHTML = '';
-
-            // 根据不同MK设置最大等级
-            let maxLevel;
-            switch(selectedMk) {
-                case 'mk1':
-                    maxLevel = 3;
-                    break;
-                case 'mk2':
-                    maxLevel = 5;
-                    break;
-                case 'mk3':
-                    maxLevel = 8;
-                    break;
-                case 'mk4':
-                    maxLevel = 10;
-                    break;
-                case 'mk5':
-                    maxLevel = 11;
-                    break;
-                case 'mk6':
-                    maxLevel = 12;
-                    break;
-                case 'mk7':
-                    maxLevel = 20;
-                    break;
-            }
-
-            // 添加当前等级选项
-            for(let i = 0; i < maxLevel; i++) {
+            
+            // 添加0到最大等级-1的选项
+            for (let i = 0; i < maxLevels[selectedMk]; i++) {
                 const option = document.createElement('option');
                 option.value = i;
                 option.textContent = i + '级';
                 currentSelect.appendChild(option);
             }
-
-            // 添加目标等级选项
-            for(let i = 1; i <= maxLevel; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i + '级';
-                targetSelect.appendChild(option);
-            }
-
-            // 触发current的change事件来更新target选项
-            currentSelect.dispatchEvent(new Event('change'));
         }
 
-        // 为MK选择框添加change事件监听
-        document.getElementById('turret-mk').addEventListener('change', function() {
-            updateLevelOptions('turret');
-        });
-
-        // 页面加载时初始化选项
-        document.addEventListener('DOMContentLoaded', function() {
-            updateLevelOptions('turret');
-        });
-
-        // 更新选择框变化事件监听
-        document.getElementById('turret-current').addEventListener('change', function() {
-            const currentLevel = parseInt(this.value);
-            const targetSelect = document.getElementById('turret-target');
-            const selectedMk = document.getElementById('turret-mk').value;
+        // 更新目标等级选项
+        function updateTargetLevelOptions(type) {
+            const targetMk = document.getElementById(`${type}-target-mk`).value;
+            const targetLevelSelect = document.getElementById(`${type}-target-level`);
             
-            // 获取最大等级
-            let maxLevel;
-            switch(selectedMk) {
-                case 'mk1':
-                    maxLevel = 3;
-                    break;
-                case 'mk2':
-                    maxLevel = 5;
-                    break;
-                case 'mk3':
-                    maxLevel = 8;
-                    break;
-                case 'mk4':
-                    maxLevel = 10;
-                    break;
-                case 'mk5':
-                    maxLevel = 11;
-                    break;
-                case 'mk6':
-                    maxLevel = 12;
-                    break;
-                case 'mk7':
-                    maxLevel = 20;
-                    break;
-            }
+            const maxLevels = {
+                'mk1': 3,
+                'mk2': 5,
+                'mk3': 8,
+                'mk4': 10,
+                'mk5': 11,
+                'mk6': 12,
+                'mk7': 20
+            };
             
-            // 重置目标等级选项
-            targetSelect.innerHTML = '';
+            // 清空现有选项
+            targetLevelSelect.innerHTML = '';
             
-            // 添加大于当前等级的选项
-            for (let i = currentLevel + 1; i <= maxLevel; i++) {
+            // 添加1到最大等级的选项
+            for (let i = 1; i <= maxLevels[targetMk]; i++) {
                 const option = document.createElement('option');
                 option.value = i;
                 option.textContent = i + '级';
-                targetSelect.appendChild(option);
+                targetLevelSelect.appendChild(option);
             }
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLevelOptions('turret');
+            updateTargetLevelOptions('turret');
         });
+
+        // 添加计算全满级（MK7-20级）成本的函数
+        function calculateFullMaxCost(type) {
+            const currentMk = document.getElementById(`${type}-mk`).value;
+            const currentLevel = parseInt(document.getElementById(`${type}-current`).value);
+            
+            let totalCost = 0;
+            
+            // 计算当前MK剩余等级的成本
+            const mkLevels = {
+                'mk1': 3,
+                'mk2': 5,
+                'mk3': 8,
+                'mk4': 10,
+                'mk5': 11,
+                'mk6': 12,
+                'mk7': 20
+            };
+            
+            // 1. 计算当前MK剩余等级的成本
+            const currentMkMax = mkLevels[currentMk];
+            for (let i = currentLevel; i < currentMkMax; i++) {
+                totalCost += upgradeCosts[currentMk][i.toString()];
+            }
+            
+            // 2. 计算后续MK的成本
+            const mkOrder = ['mk1', 'mk2', 'mk3', 'mk4', 'mk5', 'mk6', 'mk7'];
+            const currentMkIndex = mkOrder.indexOf(currentMk);
+            
+            for (let i = currentMkIndex + 1; i < mkOrder.length; i++) {
+                const mk = mkOrder[i];
+                for (let level = 0; level < mkLevels[mk]; level++) {
+                    totalCost += upgradeCosts[mk][level.toString()];
+                }
+            }
+            
+            // 保存原始成本
+            lastCalculatedCost = totalCost;
+            
+            // 更新显示结果
+            const resultElement = document.getElementById('turret-result');
+            resultElement.style.display = 'block';
+            
+            // 如果有折扣，显示原价和折扣价
+            const discountedCost = Math.floor(totalCost * currentDiscount);
+            if (currentDiscount < 1) {
+                resultElement.innerHTML = `
+                    <div class="result-detail">
+                        <p>从 ${currentMk.toUpperCase()}-${currentLevel}级 升级到 MK7-20级 需要：</p>
+                        <p>原价：${totalCost.toLocaleString()} 水晶</p>
+                        <p>折扣价：${discountedCost.toLocaleString()} 水晶</p>
+                    </div>
+                `;
+            } else {
+                resultElement.innerHTML = `
+                    <div class="result-detail">
+                        <p>从 ${currentMk.toUpperCase()}-${currentLevel}级 升级到 MK7-20级 需要：</p>
+                        <p>${discountedCost.toLocaleString()} 水晶</p>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateCustomCost(type) {
+            const currentMk = document.getElementById(`${type}-mk`).value;
+            const targetMk = document.getElementById(`${type}-target-mk`).value;
+            const currentLevel = parseInt(document.getElementById(`${type}-current`).value);
+            const targetLevel = parseInt(document.getElementById(`${type}-target-level`).value);
+            
+            // 验证输入
+            if (currentMk === targetMk && targetLevel <= currentLevel) {
+                alert('目标等级必须大于当前等级！');
+                return;
+            }
+            
+            let totalCost = 0;
+            const mkOrder = ['mk1', 'mk2', 'mk3', 'mk4', 'mk5', 'mk6', 'mk7'];
+            const currentMkIndex = mkOrder.indexOf(currentMk);
+            const targetMkIndex = mkOrder.indexOf(targetMk);
+            
+            // 如果在同一个MK内
+            if (currentMk === targetMk) {
+                for (let i = currentLevel; i < targetLevel; i++) {
+                    totalCost += upgradeCosts[currentMk][i.toString()];
+                }
+            } else {
+                // 计算当前MK剩余等级的成本
+                const currentMkMax = Object.keys(upgradeCosts[currentMk]).length;
+                for (let i = currentLevel; i < currentMkMax; i++) {
+                    totalCost += upgradeCosts[currentMk][i.toString()];
+                }
+                
+                // 计算中间MK的成本
+                for (let i = currentMkIndex + 1; i < targetMkIndex; i++) {
+                    const mk = mkOrder[i];
+                    for (let level = 0; level < Object.keys(upgradeCosts[mk]).length; level++) {
+                        totalCost += upgradeCosts[mk][level.toString()];
+                    }
+                }
+                
+                // 计算目标MK到目标等级的成本
+                for (let i = 0; i < targetLevel; i++) {
+                    totalCost += upgradeCosts[targetMk][i.toString()];
+                }
+            }
+            
+            // 保存原始成本并更新显示
+            lastCalculatedCost = totalCost;
+            updateDiscountedResult();
+        }
+        function updateDiscountedResult_chassis() {
+    const discountedCost = Math.floor(lastCalculatedCost * currentDiscount);
+    const resultElement = document.getElementById('chassis-result');
+    resultElement.style.display = 'block';
+    
+    // 如果有折扣，显示原价和折扣价
+    if (currentDiscount < 1) {
+        resultElement.innerHTML = `
+            原价：${lastCalculatedCost.toLocaleString()} 水晶<br>
+            折扣价：${discountedCost.toLocaleString()} 水晶
+        `;
+    } else {
+        resultElement.innerHTML = `升级所需水晶：${discountedCost.toLocaleString()}`;
+    }
+}
+        function calculateChassisCost() {
+            const mk = document.getElementById('chassis-mk').value;
+            const current = document.getElementById('chassis-current').value;
+            const target = document.getElementById('chassis-target-level').value;
+            
+            if (parseInt(target) <= parseInt(current)) {
+                alert('目标等级必须大于当前等级！');
+                return;
+            }
+
+            let totalCost = 0;
+            for (let i = parseInt(current); i < parseInt(target); i++) {
+                totalCost += upgradeCosts[mk][i.toString()];
+            }
+            
+            // 保存原始成本
+            lastCalculatedCost = totalCost;
+            
+            // 应用折扣并更新显示
+            updateDiscountedResult_chassis();
+        }
     </script>
 </body>
 </html> 

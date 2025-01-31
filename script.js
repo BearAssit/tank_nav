@@ -1,3 +1,11 @@
+let mbt = document.getElementsByClassName("nav-mobile-toggle")[0]
+let nl = document.getElementsByClassName("nav-links")[0]
+mbt.addEventListener("click", function() {
+    nl.style.display = nl.style.display === "none" ? "flex" : "none"
+})
+
+
+
 // 定义升级成本数据
 const upgradeCosts = {
     turret: {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玻璃风格时间轴</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #2c3e50;
+            position: relative;
+            background: #1e394e;
+        }
+
+        body::before {
+            content: '';
+            background: url(https://en.tankiwiki.com/images/ru/f/fe/Banner_img_alpha.png) no-repeat center -110px,
+                        linear-gradient(180deg,#1e394ee6,#1e394ee6);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .12;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-event {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .timeline-event:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .date {
+            font-weight: bold;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tank 导航站于2025年1月26日开始</h1>
+        <div class="timeline-event">
+            <div class="date">2025年1月31日</div>
+            <p>完成大部分功能。</p>
+        </div>
+    </div>
+</body>
+</html>

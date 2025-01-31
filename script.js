@@ -509,12 +509,25 @@ function calculateModuleCost() {
     const resultElement = document.getElementById('module-result');
     resultElement.style.display = 'block';
 
-    resultElement.innerHTML = `
+    if (currentDiscount < 1) {
+        const discost = Math.floor(totalCost * currentDiscount);
+        resultElement.innerHTML = `
+        <div class="result-detail">
+            <p>升级所需水晶：</p>
+            <p>原价：${totalCost.toLocaleString()} 水晶</p>
+            <p>折扣价：${discost.toLocaleString()} 水晶</p>
+            <p>最终防护等级：${protectionLevel}%</p>
+        </div>
+    `;
+
+    } else {
+        resultElement.innerHTML = `
         <div class="result-detail">
             <p>升级所需水晶：${totalCost.toLocaleString()}</p>
             <p>最终防护等级：${protectionLevel}%</p>
         </div>
     `;
+    }
 }
 
 function calculateDroneCost() {
@@ -537,11 +550,22 @@ function calculateDroneCost() {
     const resultElement = document.getElementById('drone-result');
     resultElement.style.display = 'block';
 
-    resultElement.innerHTML = `
+    if (currentDiscount < 1) {
+        let discost = Math.floor(totalCost * currentDiscount);
+        resultElement.innerHTML = `
         <div class="result-detail">
+            <p>升级所需水晶：</p>
+            <p>原价：${totalCost.toLocaleString()}水晶</p>
+            <p>折扣价：${discost.toLocaleString()}水晶</p>
+        </div>
+    `;
+    } else {resultElement.innerHTML = `
+        <div className="result-detail">
             <p>升级所需水晶：${totalCost.toLocaleString()}</p>
         </div>
     `;
+    }
+
 }
 
 // 设置折扣函数

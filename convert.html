@@ -16,12 +16,12 @@
             min-height: 100vh;
             color: #2c3e50;
             position: relative;
-            background: #1e394e;
+            background: linear-gradient(135deg, #1e394e, #2c3e50);
         }
 
         body::before {
             content: '';
-            background: url(https://en.tankiwiki.com/images/ru/f/fe/Banner_img_alpha.png) no-repeat center -110px,
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACVIAAAHoCAMAAACWmXaLAAADAFBMVEVobYM/ND43KzUuIy4rICqrweq70folHCWPvvlJPUnD1volHSevzfpiUFlBOEh+Y2UnICwjHCdBOUiDufk/OknW3vLF2fqdxPnD2PqPa0s3LyuNufR7svNDQ1x2VE8tL0NIRi/9+dKjhoO+0/rA1fr3div754xlUEwxLj8kGCGahmmCtPONwPn3sDmIvvr4w1NFRFuCYl2HvPlbpfr2ni50s/pKofv31mLFm5PHhnbc4vvLyvPS3PqvzfnO3fqka2r1qlbuZypmrPpoXlexz/rNpI1bSkL3l0Z0UlFfIzBBRlhKLx8jFyHfpJl8t/kxIhjljDZeQT1fXpTY4/qHvfn2zYUjHC378noiGSNLUIMnJEA9MT3XlY1vMi6wzfnvvZm50fpXTUTecD/owcXJbUxbXodYQ0LdqLLjwICAbGLTel70xrTNZS2szPg5OE1cWmj76qaqm8EaEhH7716FvPnfdyhbUiHw05/3xTinj5Genc6NhJqhUSjkvaKLPiOVeHzMf3uPhmSFf4fln0Hx2dr43kVpdIM+RlmLjLrupHiIvvm1YTC4iIfT3/v0tpyjyPlkYnLfkG1DS2f0271tV1FvkZqYg3aGgqWlVWTb5Pq2rNWZnMhjarXWrM7Ut55PYHGbhGCrl39vXFB8SzLWx9SLjcDksmScxvmmgE/FrH+ZSlOaezlgXnfiuD6DdVay0PdzpsKpnp27hGSVVknEaG6XkJ62j7zRxJq2qbppbY9Cn/yHYUfEiDi9f5zVr7OQfYGel7xkrvvOsL/MnlCnSGCOX3Fgj6ZwcI/r2umxZk+zpKXGrrBDn/x+eqg+nfw1KTS/oF1IfIViGhRQExZ0IRP99pb9+L/9+Kz4iy2aMxW6xPL++uRAnPz++vqpwPiYtvb53Xf2w2yrPBeIKRS8RxyGp/HMvuGxuendXyTa1PLw7Pzp3fU2PhWBoNnNTh5wN0pqmeecsOF/RmCI6Vxqg9VyajKtoVLax109WJeY3o5PbrpCg+q35rKy9HzkrvMhttBbGk/wAAAA0nRSTlMEDRYhLhT+Pv4+/k/+L04gc2Bf/XAmPP5OQP00IoJWiP7+Ldjq/v7BnI...(line too long; chars omitted)
                         linear-gradient(180deg,#1e394ee6,#1e394ee6);
             width: 100%;
             height: 100%;
@@ -41,33 +41,191 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         .timeline-event {
+            display: flex;
+            align-items: center;
             background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            padding: 15px;
-            margin: 10px 0;
-            position: relative;
-            transition: background 0.3s;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            font-family: 'Arial', sans-serif;
         }
 
         .timeline-event:hover {
-            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .date {
+            font-size: 1.2em;
+            color: #46df11;
             font-weight: bold;
-            color: #3498db;
+            margin-right: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+   
+
+        .timeline-content {
+            color: #555;
+            line-height: 1.5;
+            font-size: 1em;
+        }
+
+        .nav-bar {
+            background: rgba(30, 57, 78, 0.95);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: #46df11;
+            font-size: 1.3em;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-logo:hover {
+            color: #46df11;
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #46df11;
+        }
+
+        .nav-link.active {
+            color: #46df11;
+            background: rgba(70, 223, 17, 0.1);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(30, 57, 78, 0.95);
+                flex-direction: column;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tank 导航站于2025年1月26日开始</h1>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Tank导航网</a>
+            <div class="nav-mobile-toggle">☰</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="upgrade.html" class="nav-link">强化计算</a>
+                <a href="convert.html" class="nav-link active">转化功能</a>
+                <a href="thanks.html" class="nav-link">鸣谢玩家</a>
+            </div>
+        </div>
+    </nav>
+    <div class="timeline-container">
+        <div class="timeline-event">
+            <div class="date">2025年1月25日</div>
+            <div class="timeline-content">
+                <p>开始进行导航站。</p>
+            </div>
+        </div>
         <div class="timeline-event">
             <div class="date">2025年1月31日</div>
-            <p>完成大部分功能。</p>
+            <div class="timeline-content">
+                <p>完成大部分功能。</p>
+            </div>
+        </div>
+        <div class="timeline-event">
+            <div class="date">
+                2025年2月4日
+                <span class="date-block"></span>
+            </div>
+            <div class="timeline-content">
+                <p>完善升级详情数据搬运。</p>
+            </div>
         </div>
     </div>
+
+    <div class="progress-container" style="max-width: 800px; margin: 20px auto; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span style="color: #fff; font-weight: bold;">当前进度: 5%</span>
+            <div class="progress-bar" style="background-color: #e0e0e0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); width: 80%;">
+                <div style="width: 5%; background-color: #46df11; height: 20px; border-radius: 10px 0 0 10px; transition: width 0.5s ease;"></div>
+            </div>
+        </div>
+        <p style="color: #fff; margin-top: 10px;">欢迎各路肝帝一起汉化搬迁转化数据</p>
+    </div>
+
+    <script>
+        document.querySelector('.nav-mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
